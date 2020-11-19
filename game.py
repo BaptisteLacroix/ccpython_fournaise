@@ -1,5 +1,7 @@
 import pygame
 from player import Player
+from comet_event import CometFallEvent
+from bonus_event import BonusFallEvent
 
 run_right_path = "img/dodo"
 img_extension = ".png"
@@ -7,8 +9,8 @@ img_extension = ".png"
 
 # Classe qui représente le jeu
 class Game:
-    W = 1920
-    H = 1080
+    W = 1900
+    H = 1000
 
     def __init__(self):
         # définir si le jeu a commencé ou non
@@ -19,18 +21,16 @@ class Game:
         self.all_players = pygame.sprite.Group()
         self.player = Player(self)
         self.all_players.add(self.player)
-        # Groupe de pics
-        ### self.all_pics = pygame.sprite.Group()
+        # générer l'évènement
+        self.comet_event = CometFallEvent(self)
+        self.bonus_event = BonusFallEvent(self)
         self.pressed = {}
 
     def start(self):
         self.is_playing = True
-        # self.spawn_pics()
-        # self.spawn_pics()
 
     def game_over(self):
         # remettre le jeu à zéro
-        ### self.all_pics = pygame.sprite.Group()
         self.player.health = self.player.max_health
         self.is_playing = False
 
@@ -41,15 +41,25 @@ class Game:
         # Actualiser la barre de vie du joueur
         self.player.update_health_bar(screen)
 
-        # recupérer les monstres de mon jeu
-        """
-        for Pics in self.all_pics:
-            Pics.forward()
-            Pics.update_health_bar(screen)
-        """
+        # actualiser la barre d'évènement du jeu
+        self.comet_event.update_bar(screen)
 
-        # appliquer l'ensemble des images de mon groupe de pics
-        ### self.all_pics.draw(screen)
+        # actualiser la barre d'évènement du jeu
+        self.bonus_event.update_bar(screen)
+
+        # récupérer les comets du jeu
+        for comet in self.comet_event.all_comets:
+            comet.fall()
+
+        # récupérer les bonus du jeu
+        for bonus in self.bonus_event.all_bonus:
+            bonus.fall()
+
+        # appliquer l'ensemble des images de mon groupe de comettes
+        self.comet_event.all_comets.draw(screen)
+
+        # appliquer l'ensemble des images de mon groupe de bonus
+        self.bonus_event.all_bonus.draw(screen)
 
         # vérifier si le joueur veut aller à gauche ou à droite
         if self.pressed.get(pygame.K_d):
@@ -67,4 +77,3 @@ class Game:
 
     def check_collision(self, sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
-

@@ -7,3 +7,13 @@ E
 	player.py,b\7\b7fee375d0f4a9d4ab8e0e8c189004c1d8798e0e
 7
 game.py,4\6\46f05ba1bc9aacca48cacb476a68ebf273514ac0
+O
+exercices/ccpython_fournaise.py,2\0\20aa671aed47e83054942cae01c69728e1b2d94f
+>
+bonus_event.py,b\c\bc9a13375cd2f134e197543bcc7c6ef99ee7556d
+>
+comet_event.py,6\4\645f9ce4b400dd46c86fce58af8ddb0fc810bc3d
+8
+bonus.py,f\3\f30967b9eb651f9a27b948a1db67947d1a96662b
+8
+comet.py,b\c\bcaf234e2ea84d37e564e4b216134d76d7f2183d

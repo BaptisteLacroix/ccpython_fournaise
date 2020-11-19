@@ -17,10 +17,10 @@ background = pygame.image.load("img/1_37.png")
 x = 0
 
 # Coordonnées play_button
-play_button_x_min = 696
-play_button_x_max = 1172
-play_button_y_min = 539
-play_button_y_max = 752
+play_button_x_min = 691
+play_button_x_max = 1210
+play_button_y_min = 503
+play_button_y_max = 683
 
 # importer/charger la bannière
 banner = pygame.image.load("C:/Users/k/Desktop/Langage informatique/programmation/Python/CodingClubLive/cc_sonic_run"

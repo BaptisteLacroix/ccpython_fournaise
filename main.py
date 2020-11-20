@@ -50,6 +50,8 @@ while running:
     if game.is_playing:
         # délencher les instructions de la partie
         game.update(screen)
+        game.all_sprites.update()
+        game.all_sprites.draw(screen)
     # vérifier si le jeu n'a pas commencé
     else:
         # ajouter l'écran de bienvenue

@@ -7,10 +7,10 @@ class Bonus(pygame.sprite.Sprite):
     def __init__(self, bonus_event):
         super().__init__()
         # définir l'image associé à cette bonus
-        self.image = pygame.image.load("img/Star.png")
+        self.image = pygame.transform.scale(pygame.image.load("img/Star.png"), (100, 100))
         self.rect = self.image.get_rect()
         self.velocity = random.randint(1, 3)
-        self.rect.x = random.randint(10, 1800)
+        self.rect.x = 10
         self.rect.y = -300
         self.bonus_event = bonus_event
 

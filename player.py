@@ -20,7 +20,7 @@ class Player(pygame.sprite.Sprite):
         self.attack = 50
         self.health = 102
         self.max_health = 102
-        self.velocity = 4
+        self.velocity = 10
         self.image = pygame.image.load("img/dodo.png")
         self.rect = self.image.get_rect()
         self.rect.x = 179
@@ -39,12 +39,10 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(surface, (229, 25, 25), [self.rect.x + 15, self.rect.y - 20, self.health, 7])
 
     def move_right(self):
-        if not self.game.check_collision(self, self.game.all_pics):
-            self.rect.x += self.velocity
+        self.rect.x += self.velocity
 
     def move_left(self):
-        if not self.game.check_collision(self, self.game.all_pics):
-            self.rect.x -= self.velocity
+        self.rect.x -= self.velocity
 
     def process_movement_animation(self, keys: List[bool]) -> None:
         """

@@ -4,45 +4,29 @@ import random
 
 class Comet(pygame.sprite.Sprite):
 
-    def __init__(self, comet_event):
-        super().__init__()
+    def __init__(self, game):
+        pygame.sprite.Sprite.__init__(self)
+        self.game = game
         # définir l'image associé à cette comette
-        self.image = pygame.image.load("img/comet.png")
+        self.image = pygame.transform.scale(pygame.image.load("img/comet.png"), (100, 100))
         self.rect = self.image.get_rect()
-        self.velocity = random.randint(1, 3)
-        self.rect.x = random.randint(10, 1800)
-        self.rect.y = -300
-        self.comet_event = comet_event
+        self.rect.x = random.randrange(0, 1900 - 100)
+        self.rect.y = random.randrange(-500, -400)
+        self.speed_y = random.randrange(2, 8)
 
-    def remove(self):
-        self.comet_event.all_comets.remove(self)
+    def boundary(self):
+        if self.rect.y >= 750:
+            self.kill()
+            self.spawn_new_meteor()
 
-        # vérifier si le nombre de comettes est 0
-        if len(self.comet_event.all_comets) == 0:
-            # remettre la barre à 0
-            self.comet_event.reset_percent()
-            # faire apparaitre à nouveau les 2 premiers bonus
-            self.comet_event.game.bonus_event.bonus()
+    def spawn_new_meteor(self):
+        self.rect.x = random.randrange(0, 1900 - 100)
+        self.rect.y = random.randrange(-500, -400)
+        self.speed_y = random.randrange(2, 8)
 
-    def fall(self):
-        self.rect.y += self.velocity
-
-        # ne tombe pas sur le sol
-        if self.rect.y >= 610:
-            # retirer la boule de feu
+    def update(self):
+        self.rect.y += self.speed_y
+        if self.game.check_collision(self, self.game.all_players):
             self.remove()
-
-            # si il n'y a plus de boule de feu sur le jeu
-            if len(self.comet_event.all_comets) == 0:
-                # remettre la jauge de vie au départ
-                self.comet_event.reset_percent()
-                self.comet_event.fall_mode = False
-
-        # vérifier si la boule de feu touche le joueur
-        if self.comet_event.game.check_collision(
-                self, self.comet_event.game.all_players
-        ):
-            # retirer la boule de feu
-            self.remove()
-            # subir des dégats
-            self.comet_event.game.player.damage(30)
+            self.game.player.damage(10)
+        self.boundary()
